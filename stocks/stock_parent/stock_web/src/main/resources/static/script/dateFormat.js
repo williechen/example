@@ -59,9 +59,9 @@ function DateFormat(){
 	format: 對應日期解析格式
 	isChese: 是否為民國
 	
-	return Date
+	return array
 	 */
-	var parseDateString = function(dateStr, format, isChese){
+	var parseDateString = function(dateStr, format, isTw){
 		
       let formatObj = parseDateFormat(format);
       let format_src = formatObj[0];
@@ -73,7 +73,7 @@ function DateFormat(){
 		  let eIndex = format_map[key][0]+format_map[key][1];
 		  // y
 		  if ("y" == key){
-			  if (isChese){
+			  if (isTw){
 				  dateItem[0] = 1911+parseInt(dateStr.substring(sIndex, eIndex));
 			  } else {
 				  dateItem[0] = parseInt(dateStr.substring(sIndex, eIndex));
@@ -100,8 +100,8 @@ function DateFormat(){
 			  dateItem[5] = parseInt(dateStr.substring(sIndex, eIndex));
 		  }
 	  }
-	  
-	  return new Date(dateItem[0], dateItem[1], dateItem[2], dateItem[3], dateItem[4], dateItem[5]);
+
+	  return dateItem;
 	}
 	
     /**
@@ -113,7 +113,7 @@ function DateFormat(){
 	
 	return string
 	 */
-	var formatDateString = function(dateObj, format, isChese){
+	var formatDateString = function(dateObj, format, isTw){
 		
 	  let formatObj = parseDateFormat(format);
       let format_src = formatObj[0];
@@ -128,7 +128,7 @@ function DateFormat(){
 		  
 		  // y
 		  if ("y" == key){
-			  if (isChese){
+			  if (isTw){
 				  dateItem[0] = formatZero(dateObj.getFullYear()-1911, itemNum);
 			  } else {
 				  dateItem[0] = formatZero(dateObj.getFullYear(), itemNum);
@@ -193,6 +193,51 @@ function DateFormat(){
     }
 
     /**
+       檢查日期字串是否不存在
+
+    dateItem: 解析的數字陣列
+
+     */
+    var isExistDate = function(dateItem) {
+
+      //列出12個月，每月最大日期限制
+      let limitInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+      let theYear = dateItem[0];
+      let theMonth = dateItem[1];
+      let theDay = dateItem[2];
+      let isLeap = new Date(theYear, 1, 29).getDate() === 29; // 是否為閏年?
+
+      if (isLeap) {
+        // 若為閏年，最大日期限制改為 29
+        limitInMonth[1] = 29;
+      }
+
+      let theHours = dateItem[3];
+      let theMinutes = dateItem[4];
+      let theSeconds = dateItem[5];
+
+      let checkItem = [];
+      checkItem.push( ( theMonth >= 1 && theMonth <= 12 ) ? true : false );
+      // 比對該日是否超過每個月份最大日期限制
+      checkItem.push( ( theDay >= 1 && theDay <= limitInMonth[theMonth] ) ? true : false );
+      checkItem.push( ( theHours >= 0 && theHours <= 24 ) ? true : false );
+      checkItem.push( ( theMinutes >= 0 && theMinutes <= 60 ) ? true : false );
+      checkItem.push( ( theSeconds >= 0 && theSeconds <= 60 ) ? true : false );
+
+      let result = true;
+      for (let i=0; i<checkItem.length; i++){
+	    if (!checkItem[i]){
+		  result = false;
+          break;
+	    }
+      }
+
+    return result;
+}
+
+
+    /**
        西元轉民國
 
     dateStr: 日期字串
@@ -203,9 +248,15 @@ function DateFormat(){
 	return string
     */
     var toWestToTwDate = function(dateStr, parseStr, formatStr){
-	    let dateObj = parseDateString(dateStr, parseStr, false);
-	    let newDateStr = formatDateString(dateObj, formatStr, true);
-        
+	    let dateItem = parseDateString(dateStr, parseStr, false);
+        let newDateStr = "";
+        if (isExistDate(dateItem)){
+	      let dateObj = new Date(dateItem[0], dateItem[1], dateItem[2], dateItem[3], dateItem[4], dateItem[5]);
+          newDateStr = formatDateString(dateObj, formatStr, true);
+        } else {
+	      throw "日期錯誤!!";
+        }
+
         return newDateStr;
     }
 
@@ -218,13 +269,20 @@ function DateFormat(){
 	isChese: 是否為民國
     */
     var toTwToWestDate = function(dateStr, parseStr, formatStr){
-	    let dateObj = parseDateString(dateStr, parseStr, true);
-	    let newDateStr = formatDateString(dateObj, formatStr, false);
+	    let dateItem = parseDateString(dateStr, parseStr, true);
+        let newDateStr = "";
+        if (isExistDate(dateItem)){
+	      let dateObj = new Date(dateItem[0], dateItem[1], dateItem[2], dateItem[3], dateItem[4], dateItem[5]);
+          newDateStr = formatDateString(dateObj, formatStr, false);
+        } else {
+	      throw "日期錯誤!!";
+        }
         
         return newDateStr;
     }
 	
 	return {
+		isExistDate,
 		parseDateString,
 		formatDateString,
 		toWestToTwDate,

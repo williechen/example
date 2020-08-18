@@ -12,6 +12,7 @@
 	crossorigin="anonymous"></script>
 <script src="/script/dateFormat.js"></script>
 <script src="/script/validation.js"></script>
+<script src="/script/addItem.js"></script>
 </head>
 <body>
 
@@ -21,36 +22,39 @@
   <input id="format2" name="format2"/>
   <input type="button" id="btn_format" name="btn_format"/>
   <span id="df"></span>
+  <span id="df1"></span>
 </div>
 
 <script>
   var df = new DateFormat();
   var valid = new Validation();
+  valid.initObj();
+  
+  var addItem = new AddItem();
+  
+  addItem.InputCheckboxItem('df', 'df_radio', false);
 
   $("#btn_format").on("click", function(){
 	  valid.restValid();
 	  
-	  let dateStr = $("#dateStr").val();
-	  if (dateStr == ""){
-		  valid.isFalse("dateStr", "test");
-	  }
-	  let format = $("#format").val();
-	  if (format == ""){
-		  valid.isFalse("format", "test1");
-	  }
-	  let format2 = $("#format2").val();
-	  if (format2 == ""){
-		  valid.isFalse("format2", "test2");
-	  }
+	  valid.require("dateStr", "日期");
+	  valid.checkWestDate("dateStr", "日期", "yyyy/MM/dd");
 	  
-	  if (valid.status){
+	  valid.require("format", "解析格式");
+	  valid.require("format2", "日期格式");
+	  
+	  if (valid.status()){
 		  valid.showMessage();
 		  return;
 	  }
 	  
-	  $("#df").text(df.toWestToTwDate(dateStr, format, format2, true));
-  });
+	  let dateStr = $("#dateStr").val();
+	  let format = $("#format").val();
+	  let format2 = $("#format2").val();
 
+	  $("#df1").text(df.toWestToTwDate(dateStr, format, format2, true));
+  });
+ 
 </script>
 
 </body>
