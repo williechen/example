@@ -4,8 +4,6 @@
  */
 
 function Validation(){
-	
-	let elementIds = [];
 	let message = [];
 	
 	// 初始建立錯誤的CSS
@@ -61,7 +59,6 @@ function Validation(){
 	msg: 錯誤的文字
 	 */
 	var isFalse = function(elementId, msg){
-		elementIds.push(elementId);
 		message.push(msg);
 
 		let el = document.getElementById(elementId);
@@ -78,8 +75,7 @@ function Validation(){
 	var require = function(elementId, fieldName){
 		let el = document.getElementById(elementId);
 		if ( !( el.value && el.value.length > 0 && trim2(el.value) != "" ) ){
-			
-			elementIds.push(elementId);
+
 		    message.push("["+fieldName+"]為必填!!");
 		
 		    el.classList.add("ValidHasError");
@@ -95,8 +91,6 @@ function Validation(){
 		    (( minLength > 0 && trim2(el.value).length < minLength ) ||
             ( maxLength > 0 && trim2(el.value).length > maxLength ))
         ){
-			
-			elementIds.push(elementId);
 		    message.push("["+fieldName+"]輸入長度須介於["+ minLength +"~"+ maxLength +"]!!");
 		
 		    el.classList.add("ValidHasError");
@@ -111,8 +105,6 @@ function Validation(){
 		if (( el.value && trim2(el.value) != "" ) && 
             ( lengthNum > 0 && trim2(el.value).length > lengthNum )
         ){
-				
-			elementIds.push(elementId);
 		    message.push("["+fieldName+"]輸入超過最大長度["+ lengthNum +"]!!");
 		
 		    el.classList.add("ValidHasError");
@@ -127,9 +119,22 @@ function Validation(){
 		if (( el.value && trim2(el.value) != "" ) && 
 		    ( lengthNum > 0 && trim2(el.value).length < lengthNum )
         ){
-			
-			elementIds.push(elementId);
 		    message.push("["+fieldName+"]輸入長度須大於["+ lengthNum+"]!!");
+		
+		    el.classList.add("ValidHasError");
+		}
+    }
+
+    /**
+       檢查Email 格式
+     */
+    var checkEmail = function(elementId, fieldName){
+	  var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+	
+	  let el = document.getElementById(elementId);
+		if (( el.value && trim2(el.value) != "" ) && reg.test(trim2(el.value)) == false){
+			
+		    message.push("["+fieldName+"]Email格式錯誤!!");
 		
 		    el.classList.add("ValidHasError");
 		}
@@ -152,7 +157,7 @@ function Validation(){
 			
 			let dateItem = df.parseDateString(el.value, dateFormat, isTw);
 			if (!df.isExistDate(dateItem)){
-			  elementIds.push(elementId);
+				
 		      message.push("["+fieldName+"]日期輸入錯誤!!");
 		
 		      el.classList.add("ValidHasError");
@@ -207,7 +212,7 @@ function Validation(){
 			if (df.isExistDate(dateItem)){
 				startDate = new Date(dateItem[0], dateItem[1], dateItem[2], dateItem[3], dateItem[4], dateItem[5]);
             } else {
-	          elementIds.push(elementStartId);
+
 		      message.push("[起日]日期輸入錯誤!!");
 		
 		      elStart.classList.add("ValidHasError");
@@ -221,7 +226,7 @@ function Validation(){
 			if (df.isExistDate(dateItem)){
 				endDate = new Date(dateItem[0], dateItem[1], dateItem[2], dateItem[3], dateItem[4], dateItem[5]);
             } else {
-	          elementIds.push(elementEndId);
+	
 		      message.push("[迄日]日期輸入錯誤!!");
 		
 		      elEnd.classList.add("ValidHasError");
@@ -229,9 +234,7 @@ function Validation(){
 		}
 		
 		if ( ( endDate.getTime() - startDate.getTime() ) < 0 ){
-			elementIds.push(elementStartId);
-			elementIds.push(elementEndId);
-		      
+
             message.push("[起日]超過[迄日]!!");
 
 		    elStart.classList.add("ValidHasError");
@@ -248,8 +251,6 @@ function Validation(){
 		    (( parseInt(trim2(el.value)) < minNumber ) || 
             ( parseInt(trim2(el.value)) > maxNumber ))
         ){
-			
-			elementIds.push(elementId);
 		    message.push("["+fieldName+"]輸入數值須介於["+ minNumber+ "~" + maxNumber+"]!!");
 		
 		    el.classList.add("ValidHasError");
@@ -264,8 +265,6 @@ function Validation(){
 		if (( el.value && trim2(el.value) != "" ) && 
 		    ( parseInt(trim2(el.value)) > number )
         ){
-			
-			elementIds.push(elementId);
 		    message.push("["+fieldName+"]輸入數值須小於["+ number+"]!!");
 		
 		    el.classList.add("ValidHasError");
@@ -280,8 +279,6 @@ function Validation(){
 		if (( el.value && trim2(el.value) != "" ) && 
 		    ( parseInt(trim2(el.value)) < number )
         ){
-			
-			elementIds.push(elementId);
 		    message.push("["+fieldName+"]輸入數值須大於["+ number+"]!!");
 		
 		    el.classList.add("ValidHasError");
@@ -293,9 +290,11 @@ function Validation(){
 	 */
 	var restValid = function(){
 		message = [];
-		for(let i=0; i<elementIds.length; i++){
-		  let el = document.getElementById(elementIds[i]);
-          el.classList.remove("ValidError");
+		
+		let elements = document.getElementsByClassName("ValidHasError");
+		for(let i=0; i<elements.length; i++){
+		  let el = elements[i];
+          el.classList.remove("ValidHasError");
 		}
 	}
 	

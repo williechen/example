@@ -6,19 +6,46 @@
 function AddItem(){
   'use strict'
 	
-  function ajaxSyncAction(url, data, sccess, fail){
-		let a = [
-			{"code": 1, "name": "t"}, 
-			{"code": 2, "name": "e"}, 
-			{"code": 3, "name": "s"}, 
-			{"code": 4, "name": "t"}, 
-			{"code": 5, "name": "?"}
-		];
-		
-		sccess(a);
+  function ajaxAsyncAction(url, data, sccess, fail){
+    fetch(url, {
+            method: 'POST', // or 'PUT'
+            body: JSON.stringify(data), // data can be `string` or {object}!
+            headers: new Headers({
+              'Content-Type': 'application/json'
+            })
+          }
+    ).then(function (res){
+           return res.json();
+          }
+    ).catch(function(error){
+	        console.error('Error:', error);
+            fail();
+          }
+    ).then(function(response){
+	        console.log('Success:', response);
+            sccess(response);
+          }
+    );
+  }
+
+  function ajaxSyncAction(url, data){
+	return fetch(url, {
+            method: 'POST', // or 'PUT'
+            body: JSON.stringify(data), // data can be `string` or {object}!
+            headers: new Headers({
+              'Content-Type': 'application/json'
+            })
+          }
+    ).then(function (res){
+             return res.json();
+           }
+    ).catch(function(error){
+	          console.error('Error:', error);
+            }
+    );
   }
 	
-  var InputRadioItem = function(elementId, inputName, line){
+  var InputRadioItem = function(elementId, inputName, data, line=false, inputValues=null){
         
     let sccess = function(response){
 
@@ -55,10 +82,10 @@ function AddItem(){
       parentEl.innerHTML = '';
     }
 
-    ajaxSyncAction("", {}, sccess, fail);
+    ajaxAsyncAction("/ajax/getRadioData", data, sccess, fail);
   }
 
-  var InputCheckboxItem = function(elementId, inputName, line){
+  var InputCheckboxItem = function(elementId, inputName, data, line=false, inputValues=null){
 	
 	let sccess = function(response){
 
@@ -86,7 +113,7 @@ function AddItem(){
 			  parentEl.appendChild(document.createElement('br'));
 			}
 			
-		}
+		}		
 	  }
     }
 
@@ -95,10 +122,10 @@ function AddItem(){
       parentEl.innerHTML = '';
     }
 
-    ajaxSyncAction("", {}, sccess, fail);
+    ajaxSyncAction("/ajax/getRadioData", data, sccess, fail);
   }
 
-  var selectItem = function(elementId){
+  var selectItem = function(elementId, data, inputValues=null){
 	
 	let sccess = function(response){
 	  
@@ -135,7 +162,7 @@ function AddItem(){
 	  selectEl.appendChild(optionE);
     }
 
-    ajaxSyncAction("", {}, sccess, fail);
+    ajaxSyncAction("/ajax/getRadioData", data, sccess, fail);
   }
 
   /*

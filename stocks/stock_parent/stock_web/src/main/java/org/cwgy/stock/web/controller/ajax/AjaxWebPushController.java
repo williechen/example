@@ -2,7 +2,9 @@ package org.cwgy.stock.web.controller.ajax;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -55,5 +57,38 @@ public class AjaxWebPushController {
 		}
 		
 		return map;
+	}
+	
+	@RequestMapping(value = "/getRadioData", method = { RequestMethod.GET, RequestMethod.POST })
+	public List<Map<String, String>> radioData(@RequestBody String dataStr) {
+		
+		List<Map<String, String>> radios = new ArrayList<Map<String, String>>();
+		try {
+			Map<String, String> radio1 = new HashMap<String, String>();
+			radio1.put("code", "1");
+			radio1.put("name", "t");
+			radios.add(radio1);
+			
+			Map<String, String> radio2 = new HashMap<String, String>();
+			radio2.put("code", "2");
+			radio2.put("name", "e");
+			radios.add(radio2);
+			
+			Map<String, String> radio3 = new HashMap<String, String>();
+			radio3.put("code", "3");
+			radio3.put("name", "s");
+			radios.add(radio3);
+			
+			Map<String, String> radio4 = new HashMap<String, String>();
+			radio4.put("code", "4");
+			radio4.put("name", "t");
+			radios.add(radio4);
+			
+		} catch (Exception e) {
+			log.error("", e);
+			
+		}
+		
+		return radios;
 	}
 }

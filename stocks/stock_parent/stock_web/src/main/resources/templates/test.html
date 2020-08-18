@@ -31,22 +31,23 @@
   valid.initObj();
   
   var addItem = new AddItem();
-  
-  addItem.InputCheckboxItem('df', 'df_radio', false);
+
+  addItem.InputRadioItem('df', 'df_radio', {});
 
   $("#btn_format").on("click", function(){
-	  valid.restValid();
+	  var valid1 = new Validation();
+	  valid1.restValid();
 	  
-	  valid.require("dateStr", "日期");
-	  valid.checkWestDate("dateStr", "日期", "yyyy/MM/dd");
+	  valid1.require("dateStr", "日期");
+	  valid1.checkWestDate("dateStr", "日期", "yyyy/MM/dd");
 	  
-	  valid.require("format", "解析格式");
-	  valid.checkMinLength("format", "解析格式", 5);
+	  valid1.require("format", "解析格式");
+	  valid1.checkMinLength("format", "解析格式", 5);
 	  
-	  valid.require("format2", "日期格式");
+	  valid1.require("format2", "日期格式");
 	  
-	  if (valid.status()){
-		  valid.showMessage();
+	  if (valid1.status()){
+		  valid1.showMessage();
 		  return;
 	  }
 	  
