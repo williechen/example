@@ -137,12 +137,32 @@ function AddItem(){
 
     ajaxSyncAction("", {}, sccess, fail);
   }
+
+  /*
+      * 把半形字串轉成全形
+   * @return 全形字串
+   */
+  var halfToFull = function (input) {
+    let temp = "";
+    for (let i = 0; i < input.length; i++) {
+        let charCode = input.charCodeAt(i);
+        if (charCode <= 126 && charCode >= 33) {
+            charCode += 65248;
+        } else if (charCode == 32) { // 半形空白轉全形
+            charCode = 12288;
+        }
+        temp = temp + String.fromCharCode(charCode);
+    }
+    return temp;
+  }
    
 
   return {
 	InputRadioItem,
 	InputCheckboxItem,
-	selectItem
+	selectItem,
+	
+	halfToFull
 	 
   }
 

@@ -111,7 +111,7 @@ function Validation(){
 		if (( el.value && trim2(el.value) != "" ) && 
             ( lengthNum > 0 && trim2(el.value).length > lengthNum )
         ){
-			
+				
 			elementIds.push(elementId);
 		    message.push("["+fieldName+"]輸入超過最大長度["+ lengthNum +"]!!");
 		
