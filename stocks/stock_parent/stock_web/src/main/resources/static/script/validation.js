@@ -92,12 +92,12 @@ function Validation(){
     var checkStrLength = function(elementId, fieldName, minLength, maxLength){
 	    let el = document.getElementById(elementId);
 		if ( ( el.value && trim2(el.value) != "" ) && 
-		    ( minLength > 0 && trim2(el.value).length < minLength ) &&
-            ( maxLength > 0 && trim2(el.value).length > maxLength )
+		    (( minLength > 0 && trim2(el.value).length < minLength ) ||
+            ( maxLength > 0 && trim2(el.value).length > maxLength ))
         ){
 			
 			elementIds.push(elementId);
-		    message.push("["+fieldName+"]輸入長度須為["+ minLength +"~"+ maxLength +"]!!");
+		    message.push("["+fieldName+"]輸入長度須介於["+ minLength +"~"+ maxLength +"]!!");
 		
 		    el.classList.add("ValidHasError");
 		}
@@ -129,7 +129,7 @@ function Validation(){
         ){
 			
 			elementIds.push(elementId);
-		    message.push("["+fieldName+"]輸入長度須為["+ lengthNum+"]!!");
+		    message.push("["+fieldName+"]輸入長度須大於["+ lengthNum+"]!!");
 		
 		    el.classList.add("ValidHasError");
 		}
@@ -245,8 +245,8 @@ function Validation(){
 	var checkNumber = function(elementId, fieldName, minNumber, maxNumber){
 		 let el = document.getElementById(elementId);
 		if ( ( el.value && trim2(el.value) != "" ) && 
-		    ( parseInt(trim2(el.value)) < minNumber ) && 
-            ( parseInt(trim2(el.value)) > maxNumber )
+		    (( parseInt(trim2(el.value)) < minNumber ) || 
+            ( parseInt(trim2(el.value)) > maxNumber ))
         ){
 			
 			elementIds.push(elementId);
