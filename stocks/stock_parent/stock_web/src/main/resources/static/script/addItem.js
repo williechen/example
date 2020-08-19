@@ -27,23 +27,6 @@ function AddItem(){
           }
     );
   }
-
-  function ajaxSyncAction(url, data){
-	return fetch(url, {
-            method: 'POST', // or 'PUT'
-            body: JSON.stringify(data), // data can be `string` or {object}!
-            headers: new Headers({
-              'Content-Type': 'application/json'
-            })
-          }
-    ).then(function (res){
-             return res.json();
-           }
-    ).catch(function(error){
-	          console.error('Error:', error);
-            }
-    );
-  }
 	
   var InputRadioItem = function(elementId, inputName, data, line=false, inputValues=null){
         
@@ -62,6 +45,15 @@ function AddItem(){
 			inputRadio.id = inputName+"_"+item.code;
 			inputRadio.value = item.code;
 			
+			if (inputValues && inputValues.length > 0){
+				for (let j=0;j<inputValues.length;j++){
+					let val = inputValues[j];
+					if (val == item.code){
+						inputRadio.checked = true;
+					}
+				}
+			}
+			
 			parentEl.appendChild(inputRadio);
 			
 			let inputValue = document.createElement('span');
@@ -72,7 +64,6 @@ function AddItem(){
 			if (line){
 			  parentEl.appendChild(document.createElement('br'));
 			}
-			
 		}
 	  }
     };
@@ -102,6 +93,15 @@ function AddItem(){
 			inputCheckbox.id = inputName+"_"+item.code;
 			inputCheckbox.value = item.code;
 			
+			if (inputValues && inputValues.length > 0){
+				for (let j=0;j<inputValues.length;j++){
+					let val = inputValues[j];
+					if (val == item.code){
+						inputCheckbox.checked = true;
+					}
+				}
+			}
+			
 			parentEl.appendChild(inputCheckbox);
 			
 			let inputValue = document.createElement('span');
@@ -122,7 +122,7 @@ function AddItem(){
       parentEl.innerHTML = '';
     }
 
-    ajaxSyncAction("/ajax/getRadioData", data, sccess, fail);
+    ajaxAsyncAction("/ajax/getRadioData", data, sccess, fail);
   }
 
   var selectItem = function(elementId, data, inputValues=null){
@@ -134,7 +134,7 @@ function AddItem(){
 
       let optionE = document.createElement('option');
 	  optionE.value = "";
-	  optionE.name = "請選擇";
+	  optionE.innerHTML = "請選擇";
 			
 	  selectEl.appendChild(optionE);
 
@@ -144,7 +144,16 @@ function AddItem(){
 			
 			let option = document.createElement('option');
 			option.value = item.code;
-			option.name = item.name;
+			option.innerHTML = item.name;
+			
+			if (inputValues && inputValues.length > 0){
+				for (let j=0;j<inputValues.length;j++){
+					let val = inputValues[j];
+					if (val == item.code){
+						option.selected = true;
+					}
+				}
+			}
 			
 			selectEl.appendChild(option);
 		}
@@ -157,12 +166,12 @@ function AddItem(){
 
       let optionE = document.createElement('option');
 	  optionE.value = "";
-	  optionE.name = "請選擇";
+	  optionE.innerHTML = "請選擇";
 			
 	  selectEl.appendChild(optionE);
     }
 
-    ajaxSyncAction("/ajax/getRadioData", data, sccess, fail);
+    ajaxAsyncAction("/ajax/getRadioData", data, sccess, fail);
   }
 
   /*

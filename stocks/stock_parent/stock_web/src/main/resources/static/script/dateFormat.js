@@ -218,7 +218,7 @@ function DateFormat(){
       let theSeconds = dateItem[5];
 
       let checkItem = [];
-      checkItem.push( ( theMonth >= 1 && theMonth <= 12 ) ? true : false );
+      checkItem.push( ( theMonth >= 0 && theMonth <= 11 ) ? true : false );
       // 比對該日是否超過每個月份最大日期限制
       checkItem.push( ( theDay >= 1 && theDay <= limitInMonth[theMonth] ) ? true : false );
       checkItem.push( ( theHours >= 0 && theHours <= 24 ) ? true : false );

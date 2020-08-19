@@ -22,7 +22,11 @@
   <input id="format2" name="format2"/>
   <input type="button" id="btn_format" name="btn_format"/>
   <span id="df"></span>
-  <span id="df1"></span>
+  <div id="df1"></div>
+  <div id="df2"></div>
+  <div id="df3">
+    <select id="testSelect" name="testSelect"></select>
+  </div>
 </div>
 
 <script>
@@ -32,14 +36,16 @@
   
   var addItem = new AddItem();
 
-  addItem.InputRadioItem('df', 'df_radio', {});
+  addItem.InputRadioItem('df1', 'df1_radio', {}, false, ["2"]);
+  addItem.InputCheckboxItem('df2', 'df2_checkbox', {}, false, ["1", "3"]);
+  addItem.selectItem('testSelect', {}, ["1"]);
 
   $("#btn_format").on("click", function(){
 	  var valid1 = new Validation();
 	  valid1.restValid();
 	  
 	  valid1.require("dateStr", "日期");
-	  valid1.checkWestDate("dateStr", "日期", "yyyy/MM/dd");
+	  valid1.checkWestDate("dateStr", "日期", "yyyy/MMdd");
 	  
 	  valid1.require("format", "解析格式");
 	  valid1.checkMinLength("format", "解析格式", 5);
@@ -55,7 +61,7 @@
 	  let format = $("#format").val();
 	  let format2 = $("#format2").val();
 
-	  $("#df1").text(df.toWestToTwDate(dateStr, format, format2, true));
+	  $("#df").text(df.toWestToTwDate(dateStr, format, format2, true));
   });
  
 </script>
