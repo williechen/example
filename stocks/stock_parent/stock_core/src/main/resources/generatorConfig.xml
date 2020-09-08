@@ -19,8 +19,8 @@
 			targetPackage="org.cwgy.stock.core.dao"
 			targetProject="src/main/java" type="XMLMAPPER" />
 			
-		<table schema="public" tableName="t_stock" ></table>
-		<table schema="public" tableName="t_stock_market" ></table>
+		<table schema="public" tableName="t_stock" domainObjectName="StockDao"></table>
+		<table schema="public" tableName="t_stock_market" domainObjectName="StockMarketDao"></table>
 		
 	</context>
 </generatorConfiguration>
