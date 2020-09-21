@@ -98,11 +98,6 @@
 			<artifactId>bcprov-jdk15on</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>com.graphql-java</groupId>
-			<artifactId>graphql-java</artifactId>
-		</dependency>
-
 		<!-- Junit 5 -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
