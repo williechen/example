@@ -121,6 +121,9 @@
 				<plugin>
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-maven-plugin</artifactId>
+					<configuration>
+                      <fork>true</fork> <!-- 如果沒有該配置，devtools不會生效 -->
+                    </configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
