@@ -8,9 +8,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication(scanBasePackages={"org.cwgy.stock.core.*", "org.cwgy.stock.batch.*"})
 @EnableTransactionManagement
 @EnableScheduling
-public class StockSpringBootApplication {
+public class StockBatchApplication {
 
 	 public static void main(String[] args) {
-	        SpringApplication.run(StockSpringBootApplication.class, args);
+	        SpringApplication.run(StockBatchApplication.class, args);
 	    }
 }
