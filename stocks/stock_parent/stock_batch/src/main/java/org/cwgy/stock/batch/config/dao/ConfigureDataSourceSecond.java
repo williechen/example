@@ -17,7 +17,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 @Configuration
-@MapperScan(basePackages = "org.cwgy.stock.core.dao1", sqlSessionFactoryRef = "secondSessionFactory")
+@MapperScan(basePackages = "org.cwgy.stock.batch.dao", sqlSessionFactoryRef = "secondSessionFactory")
 public class ConfigureDataSourceSecond {
 
 	private static final String MAPPER_LOCATION = "classpath:mapper/generatorMapper/**Mapper.xml";
