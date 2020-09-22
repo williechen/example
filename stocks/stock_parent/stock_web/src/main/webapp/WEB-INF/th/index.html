@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="utf-8">
@@ -12,7 +12,7 @@
 	<link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css">
 	<script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="/index.css">
+	<link rel="stylesheet" th:href="@{/index.css}">
 </head>
 
 <body>
@@ -41,7 +41,7 @@
 		</section>
 	</main>
 
-	<script src="/main.js"></script>
+	<script th:src="@{/main.js}"></script>
 	<script src="https://code.getmdl.io/1.2.1/material.min.js"></script>
 </body>
 

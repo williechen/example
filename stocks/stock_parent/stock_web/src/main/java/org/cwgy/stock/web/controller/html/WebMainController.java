@@ -7,9 +7,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class WebMainController {
 
-	@RequestMapping(value = "/testError", method = { RequestMethod.GET, RequestMethod.POST })
-	public String mainIndex() {
+	@RequestMapping(value = "/testHtmlError", method = { RequestMethod.GET, RequestMethod.POST })
+	public String testHtmlError() {
 		return "th/test";
+	}
+	
+	@RequestMapping(value = "/testJspError", method = { RequestMethod.GET, RequestMethod.POST })
+	public String testJspError() {
+		return "jsp/index";
 	}
 	
 }
