@@ -9,6 +9,7 @@ public class WebMainController {
 
 	@RequestMapping(value = "/testError", method = { RequestMethod.GET, RequestMethod.POST })
 	public String mainIndex() {
-		return "test";
+		return "th/test";
 	}
+	
 }

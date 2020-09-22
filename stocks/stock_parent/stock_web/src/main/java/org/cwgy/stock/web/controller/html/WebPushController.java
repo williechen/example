@@ -9,6 +9,6 @@ public class WebPushController {
 
 	@RequestMapping(value = "/", method = { RequestMethod.GET, RequestMethod.POST })
 	public String mainIndex() {
-		return "index";
+		return "th/index";
 	}
 }
