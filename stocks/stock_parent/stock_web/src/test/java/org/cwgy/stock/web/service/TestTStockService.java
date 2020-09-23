@@ -1,5 +1,6 @@
 package org.cwgy.stock.web.service;
 
+import org.cwgy.stock.core.Mapper.TStockExample;
 import org.cwgy.stock.core.dao.TStockMapper;
 import org.cwgy.stock.core.service.TStockService;
 import org.cwgy.stock.core.service.UtilsService;
@@ -23,7 +24,9 @@ class TestTStockService extends TestBaseService{
 
 	@Test
 	void test() {
-		Mockito.when(stockService.getCount()).thenReturn(1L);
+		TStockExample example = new TStockExample();
+		example.createCriteria().andStockCodeEqualTo("0050");
+		Mockito.when(stockMapper.countByExample(example)).thenReturn(1L);
 		
 		Assertions.assertEquals(stockService.getCount(), 1);
 	}
