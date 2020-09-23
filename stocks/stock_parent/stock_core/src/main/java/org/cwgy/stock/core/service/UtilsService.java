@@ -1,12 +1,6 @@
 package org.cwgy.stock.core.service;
 
-import org.springframework.stereotype.Component;
+public interface UtilsService {
 
-@Component
-public class UtilsService {
-	
-	public String show() {
-		return "Hello World!";
-	}
-
+	public String show();
 }
