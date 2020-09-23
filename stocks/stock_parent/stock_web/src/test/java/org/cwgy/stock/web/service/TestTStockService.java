@@ -8,12 +8,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 
 class TestTStockService extends TestBaseService{
 	
 	@MockBean
+	@Qualifier("TStockMapper")
 	private TStockMapper stockMapper;
 	
 	@Autowired
