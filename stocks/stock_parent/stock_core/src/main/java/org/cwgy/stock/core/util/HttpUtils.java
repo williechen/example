@@ -41,7 +41,7 @@ import org.apache.hc.core5.util.Timeout;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * 
+ * 網際網路存取
  * @author willie chen
  *
  */
@@ -50,11 +50,11 @@ public class HttpUtils {
 
 	/**
 	 * 
-	 * @param url
-	 * @param headers
-	 * @param parames
-	 * @return
-	 * @throws Exception
+	 * @param url http url
+	 * @param headers http header
+	 * @param parames http param
+	 * @return ClassicHttpRequest http request
+	 * @throws Exception error
 	 */
 	public static ClassicHttpRequest methodGet(String url, Map<String, String> headers, Map<String, Object> parames)
 			throws Exception {
@@ -95,11 +95,11 @@ public class HttpUtils {
 
 	/**
 	 * 
-	 * @param url
-	 * @param headers
-	 * @param parames
-	 * @return
-	 * @throws Exception
+	 * @param url http url
+	 * @param headers http header
+	 * @param parames 
+	 * @return ClassicHttpRequest 
+	 * @throws Exception 
 	 */
 	public static ClassicHttpRequest methodPost(String url, Map<String, String> headers, Map<String, Object> parames)
 			throws Exception {
@@ -137,11 +137,11 @@ public class HttpUtils {
 
 	/**
 	 * 
-	 * @param url
-	 * @param headers
-	 * @param parames
-	 * @return
-	 * @throws Exception
+	 * @param url http url
+	 * @param headers http header
+	 * @param parames 
+	 * @return ClassicHttpRequest 
+	 * @throws Exception 
 	 */
 	public static ClassicHttpRequest methodGetByJson(String url, Map<String, String> headers,
 			Map<String, Object> parames) throws Exception {
@@ -182,11 +182,11 @@ public class HttpUtils {
 
 	/**
 	 * 
-	 * @param url
-	 * @param headers
-	 * @param parame
-	 * @return
-	 * @throws Exception
+	 * @param url http url
+	 * @param headers http header
+	 * @param parame 
+	 * @return ClassicHttpRequest 
+	 * @throws Exception 
 	 */
 	public static ClassicHttpRequest methodPostByJson(String url, Map<String, String> headers,
 			Map<String, Object> parame) throws Exception {
@@ -220,9 +220,9 @@ public class HttpUtils {
 
 	/**
 	 * 
-	 * @param request
-	 * @return
-	 * @throws Exception
+	 * @param request http request
+	 * @return Map<String, Object> 
+	 * @throws Exception 
 	 */
 	public static Map<String, Object> getHttpResponseData(ClassicHttpRequest request) throws Exception {
 		CloseableHttpClient client = null;
@@ -262,9 +262,9 @@ public class HttpUtils {
 
 	/**
 	 * 
-	 * @param request
-	 * @return
-	 * @throws Exception
+	 * @param request http request
+	 * @return Map<String, Object> 
+	 * @throws Exception 
 	 */
 	public static Map<String, Object> getFileToBase64ByHttpResponseData(ClassicHttpRequest request) throws Exception {
 		CloseableHttpClient client = null;
@@ -315,9 +315,9 @@ public class HttpUtils {
 	
 	/**
 	 * 
-	 * @param request
-	 * @return
-	 * @throws Exception
+	 * @param request http request
+	 * @return Map<String, Object> 
+	 * @throws Exception 
 	 */
 	public static Map<String, Object> getHttpsResponseData(ClassicHttpRequest request) throws Exception {
 		CloseableHttpClient client = null;
@@ -373,9 +373,9 @@ public class HttpUtils {
 
 	/**
 	 * 
-	 * @param request
-	 * @return
-	 * @throws Exception
+	 * @param request http request
+	 * @return Map<String, Object> 
+	 * @throws Exception 
 	 */
 	public static Map<String, Object> getFileToBase64ByHttpsResponseData(ClassicHttpRequest request) throws Exception {
 		CloseableHttpClient client = null;

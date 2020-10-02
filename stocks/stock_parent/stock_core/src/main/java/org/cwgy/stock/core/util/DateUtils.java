@@ -11,7 +11,7 @@ public class DateUtils {
 	
 	/**
 	 * 取得標準系統當前日期時間
-	 * @return
+	 * @return 當前日期時間
 	 */
     public static ZonedDateTime getSystemDate() {
     	return ZonedDateTime.now(UTC);
@@ -19,7 +19,7 @@ public class DateUtils {
 	
     /**
      * 取得台灣系統當前日期時間
-     * @return
+     * @return 當前日期時間
      */
 	public static ZonedDateTime getTwSystemDate() {
 		return ZonedDateTime.now(TAIWAN);
@@ -27,8 +27,8 @@ public class DateUtils {
 	
 	/**
 	 * ZonedDateTime To Date
-	 * @param datetime
-	 * @return
+	 * @param datetime 日期時間
+	 * @return 日期時間
 	 */
 	public static Date toDate(ZonedDateTime datetime) {
 		return new Date(datetime.toEpochSecond());
@@ -36,8 +36,8 @@ public class DateUtils {
 	
 	/**
 	 * Date To ZonedDateTime UTC
-	 * @param date
-	 * @return
+	 * @param date 日期時間
+	 * @return 日期時間
 	 */
 	public static ZonedDateTime toUTCDateTime(Date date) {
 		return ZonedDateTime.ofInstant(date.toInstant(), UTC);
@@ -45,8 +45,8 @@ public class DateUtils {
 	
 	/**
 	 * Date To ZonedDateTime TAIWAN
-	 * @param date
-	 * @return
+	 * @param date 日期時間
+	 * @return 日期時間
 	 */
 	public static ZonedDateTime toTaiwanDateTime(Date date) {
 		return ZonedDateTime.ofInstant(date.toInstant(), TAIWAN);
@@ -54,13 +54,13 @@ public class DateUtils {
 	
 	/**
 	 * 日期時間加總 UTC
-	 * @param y 
-	 * @param m 
-	 * @param d 
-	 * @param h 
-	 * @param i 
-	 * @param s 
-	 * @return 
+	 * @param y 年
+	 * @param m 月
+	 * @param d 日
+	 * @param h 時
+	 * @param i 分
+	 * @param s 秒
+	 * @return 日期時間
 	 */
 	public static ZonedDateTime plusUTCDatetime(long y, long m, long d, long h, long i, long s) {
 		return ZonedDateTime.now(UTC).plusYears(y).plusMonths(m).plusDays(d).plusHours(h).plusMinutes(i).plusSeconds(s);
