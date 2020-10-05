@@ -4,7 +4,11 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class DateUtils {
+	Logger log = LogManager.getLogger(getClass());
 	
 	private static final ZoneId UTC = ZoneId.of("UTC");
 	private static final ZoneId TAIWAN = ZoneId.of("Asia/Taipei");

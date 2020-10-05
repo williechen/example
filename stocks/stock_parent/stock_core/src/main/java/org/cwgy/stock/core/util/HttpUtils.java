@@ -38,6 +38,8 @@ import org.apache.hc.core5.net.URIBuilder;
 import org.apache.hc.core5.ssl.SSLContexts;
 import org.apache.hc.core5.ssl.TrustStrategy;
 import org.apache.hc.core5.util.Timeout;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -48,6 +50,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 
 public class HttpUtils {
+	Logger log = LogManager.getLogger(getClass());
 
 	/**
 	 * 
@@ -60,13 +63,15 @@ public class HttpUtils {
 	public static ClassicHttpRequest methodGet(String url, Map<String, String> headers, Map<String, Object> parames)
 			throws Exception {
 
-		// 設定引數
 		URIBuilder uriBuilder = new URIBuilder(url);
+		// 設定引數
+		List<NameValuePair> valuePairs = new ArrayList<NameValuePair>();
 		for (Iterator<String> iter = parames.keySet().iterator(); iter.hasNext();) {
 			String name = (String) iter.next();
 			String value = String.valueOf(parames.get(name));
-			uriBuilder.addParameter(name, value);
+			valuePairs.add(new BasicNameValuePair(name, value));
 		}
+		uriBuilder.addParameters(valuePairs);
 		
 		HttpGet httpGet = new HttpGet(uriBuilder.build());
 
@@ -143,19 +148,17 @@ public class HttpUtils {
 	public static ClassicHttpRequest methodGetByJson(String url, Map<String, String> headers,
 			Map<String, Object> parames) throws Exception {
 
+		URIBuilder uriBuilder = new URIBuilder(url);
 		// 設定引數
-		String parameGet = "";
-		if (parames != null && !parames.isEmpty()) {
-			StringBuilder sb = new StringBuilder();
-			for (Iterator<String> iter = parames.keySet().iterator(); iter.hasNext();) {
-				String name = (String) iter.next();
-				String value = String.valueOf(parames.get(name));
-				sb.append("&").append(name).append("=").append(value);
-			}
-			parameGet = sb.toString().replaceFirst("&", "?");
-		}
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = mapper.writeValueAsString(parames);
+		
+		Encoder encoder = Base64.getEncoder();
+		String base64fileString = new String(encoder.encode(jsonString.getBytes()));
+		
+		uriBuilder.addParameter("request_data", base64fileString);
 
-		HttpGet httpGet = new HttpGet(url + parameGet);
+		HttpGet httpGet = new HttpGet(uriBuilder.build());
 
 		Builder config = RequestConfig.custom();
 		config.setConnectTimeout(Timeout.ofMinutes(5L)); // 總連線時間
@@ -322,14 +325,16 @@ public class HttpUtils {
 
 		Map<String, Object> resultMap = null;
 		try {
-			
+			//信任所有
 			final SSLContext sslcontext = SSLContexts.custom().loadTrustMaterial(new TrustStrategy() {
-
+				Logger logSub = LogManager.getLogger(getClass());
+				
 				@Override
 				public boolean isTrusted(final X509Certificate[] chain, final String authType)
 						throws CertificateException {
 					final X509Certificate cert = chain[0];
-					return "CN=httpbin.org".equalsIgnoreCase(cert.getSubjectDN().getName());
+					logSub.info("SubjectDN="+cert.getSubjectDN().getName());
+					return true;
 				}
 
 			}).build();
@@ -381,14 +386,16 @@ public class HttpUtils {
 		Map<String, Object> resultMap = null;
 
 		try {
-
+			//信任所有
 			final SSLContext sslcontext = SSLContexts.custom().loadTrustMaterial(new TrustStrategy() {
-
+				Logger logSub = LogManager.getLogger(getClass());
+				
 				@Override
 				public boolean isTrusted(final X509Certificate[] chain, final String authType)
 						throws CertificateException {
 					final X509Certificate cert = chain[0];
-					return "CN=httpbin.org".equalsIgnoreCase(cert.getSubjectDN().getName());
+					logSub.info("SubjectDN="+cert.getSubjectDN().getName());
+					return true;
 				}
 
 			}).build();
