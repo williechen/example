@@ -34,6 +34,7 @@ import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.http.message.BasicNameValuePair;
 import org.apache.hc.core5.http.ssl.TLS;
+import org.apache.hc.core5.net.URIBuilder;
 import org.apache.hc.core5.ssl.SSLContexts;
 import org.apache.hc.core5.ssl.TrustStrategy;
 import org.apache.hc.core5.util.Timeout;
@@ -60,18 +61,14 @@ public class HttpUtils {
 			throws Exception {
 
 		// 設定引數
-		String parameGet = "";
-		if (parames != null && !parames.isEmpty()) {
-			StringBuilder sb = new StringBuilder();
-			for (Iterator<String> iter = parames.keySet().iterator(); iter.hasNext();) {
-				String name = (String) iter.next();
-				String value = String.valueOf(parames.get(name));
-				sb.append("&").append(name).append("=").append(value);
-			}
-			parameGet = sb.toString().replaceFirst("&", "?");
+		URIBuilder uriBuilder = new URIBuilder(url);
+		for (Iterator<String> iter = parames.keySet().iterator(); iter.hasNext();) {
+			String name = (String) iter.next();
+			String value = String.valueOf(parames.get(name));
+			uriBuilder.addParameter(name, value);
 		}
-
-		HttpGet httpGet = new HttpGet(url + parameGet);
+		
+		HttpGet httpGet = new HttpGet(uriBuilder.build());
 
 		Builder config = RequestConfig.custom();
 		config.setConnectTimeout(Timeout.ofMinutes(5L)); // 總連線時間
@@ -82,7 +79,7 @@ public class HttpUtils {
 
 		// 設定 header
 		if (headers != null && !headers.isEmpty()) {
-			for (Iterator iter = headers.keySet().iterator(); iter.hasNext();) {
+			for (Iterator<String> iter = headers.keySet().iterator(); iter.hasNext();) {
 				String name = (String) iter.next();
 				String value = String.valueOf(headers.get(name));
 				httpGet.setHeader(name, value);
@@ -169,7 +166,7 @@ public class HttpUtils {
 
 		// 設定 header
 		if (headers != null && !headers.isEmpty()) {
-			for (Iterator iter = headers.keySet().iterator(); iter.hasNext();) {
+			for (Iterator<String> iter = headers.keySet().iterator(); iter.hasNext();) {
 				String name = (String) iter.next();
 				String value = String.valueOf(headers.get(name));
 				httpGet.setHeader(name, value);

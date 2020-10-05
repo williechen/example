@@ -2,8 +2,6 @@ package org.cwgy.stock.batch.enitiy;
 
 import java.util.List;
 
-import org.quartz.JobDataMap;
-
 public class SchedulerJobInfo {
 	private Long id;
 

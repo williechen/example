@@ -33,7 +33,7 @@ public class AjaxWebPushController {
 	}
 
 	@RequestMapping(value = "/subscription", method = { RequestMethod.GET, RequestMethod.POST })
-	public Map subscription(HttpServletResponse response) {
+	public Map<String, Object> subscription(HttpServletResponse response) {
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -43,7 +43,7 @@ public class AjaxWebPushController {
 	}
 	
 	@RequestMapping(value = "/push_v1", method = { RequestMethod.GET, RequestMethod.POST })
-	public Map pushData(@RequestBody String dataStr) {
+	public Map<String, Object> pushData(@RequestBody String dataStr) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
