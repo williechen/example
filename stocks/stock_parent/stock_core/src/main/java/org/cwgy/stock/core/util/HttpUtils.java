@@ -50,7 +50,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 
 public class HttpUtils {
-	Logger log = LogManager.getLogger(getClass());
+	private static Logger log = LogManager.getLogger(HttpUtils.class);
 
 	/**
 	 * 
@@ -65,13 +65,15 @@ public class HttpUtils {
 
 		URIBuilder uriBuilder = new URIBuilder(url);
 		// 設定引數
-		List<NameValuePair> valuePairs = new ArrayList<NameValuePair>();
-		for (Iterator<String> iter = parames.keySet().iterator(); iter.hasNext();) {
-			String name = (String) iter.next();
-			String value = String.valueOf(parames.get(name));
-			valuePairs.add(new BasicNameValuePair(name, value));
+		if (parames != null && !parames.isEmpty()) {
+			List<NameValuePair> valuePairs = new ArrayList<NameValuePair>();
+			for (Iterator<String> iter = parames.keySet().iterator(); iter.hasNext();) {
+				String name = (String) iter.next();
+				String value = String.valueOf(parames.get(name));
+				valuePairs.add(new BasicNameValuePair(name, value));
+			}
+			uriBuilder.addParameters(valuePairs);
 		}
-		uriBuilder.addParameters(valuePairs);
 		
 		HttpGet httpGet = new HttpGet(uriBuilder.build());
 
@@ -150,14 +152,16 @@ public class HttpUtils {
 
 		URIBuilder uriBuilder = new URIBuilder(url);
 		// 設定引數
-		ObjectMapper mapper = new ObjectMapper();
-		String jsonString = mapper.writeValueAsString(parames);
-		
-		Encoder encoder = Base64.getEncoder();
-		String base64fileString = new String(encoder.encode(jsonString.getBytes()));
-		
-		uriBuilder.addParameter("request_data", base64fileString);
+		if (parames != null && !parames.isEmpty()) {
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonString = mapper.writeValueAsString(parames);
 
+			Encoder encoder = Base64.getEncoder();
+			String base64fileString = new String(encoder.encode(jsonString.getBytes()));
+
+			uriBuilder.addParameter("request_data", base64fileString);
+		}
+		
 		HttpGet httpGet = new HttpGet(uriBuilder.build());
 
 		Builder config = RequestConfig.custom();
