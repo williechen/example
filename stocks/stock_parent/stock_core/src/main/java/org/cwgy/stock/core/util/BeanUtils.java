@@ -1,7 +1,6 @@
 package org.cwgy.stock.core.util;
 
 import java.lang.reflect.Field;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,7 +17,7 @@ public class BeanUtils {
 	    for (Field f : clazz.getDeclaredFields())
 	        if (f.get(clazz) != null)
 	            return false;
-	    return true;            
+	    return true;   
 	}
 	
 	

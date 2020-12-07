@@ -1,5 +1,6 @@
 package org.cwgy.stock.core.service;
 
+import org.cwgy.stock.core.TestBaseService;
 import org.cwgy.stock.core.dao.StockDao;
 import org.cwgy.stock.core.model.StockModelExample;
 import org.cwgy.stock.core.service.impl.TStockServiceImpl;

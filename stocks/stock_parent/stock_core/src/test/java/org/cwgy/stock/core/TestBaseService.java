@@ -1,4 +1,4 @@
-package org.cwgy.stock.core.service;
+package org.cwgy.stock.core;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
